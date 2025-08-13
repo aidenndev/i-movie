@@ -1,7 +1,27 @@
 @import "tailwindcss";
 
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
 @theme {
 }
 
 @layer base {
 }
+
+@utility text-gradient {
+  @apply bg-gradient-to-r from-red-400 to-indigo-600
+          bg-clip-text text-transparent;
+}
+
+@utility wrapper {
+  @apply flex flex-col items-center justify-center;
+}
+
+    body {
+        background-image: url("./assets/bg.png"); /* Note the leading slash */
+        background-size: cover; /* Optional: Adjust as needed */
+        background-position: center; /* Optional: Adjust as needed */
+        background-repeat: no-repeat; /* Optional: Prevent tiling */
+        background-color: black;
+        color: white;
+    }
