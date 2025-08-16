@@ -1,6 +1,7 @@
 import { use, useEffect, useState } from "react";
 import "./App.css";
 import Search from "./components/Search";
+import Spinner from "./components/Spinner";
 
 function App() {
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -30,14 +31,13 @@ function App() {
       const data = await response.json();
       console.log("Fetched movies:", data);
 
-      if(data.Response === "False"){
+      if (data.Response === "False") {
         setErrorMessage(data.Error || "No movies found");
         setMovies([]);
         return;
       }
 
       setMovies(data.results || []);
-
     } catch (error) {
       console.error(`Error fetching movies: ${error}`);
       setErrorMessage("Failed to fetch movies");
@@ -72,7 +72,23 @@ function App() {
         <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <section className="movie-list">
           <h2>All movies</h2>
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          {loading ? (
+            <Spinner />
+          ) : errorMessage ? (
+            <p className="error-message">{errorMessage}</p>
+          ) : (
+            <ul>
+              {movies.map((movie) => (
+                <li key={movie.id}>
+                  <h4>{movie.title}</h4>
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    alt={movie.title}
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
         </section>
       </div>
     </main>
