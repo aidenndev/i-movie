@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 @theme {
 }
@@ -17,15 +17,39 @@
   @apply flex flex-col items-center justify-center text-center;
 }
 
-    body {
-        background-image: url("./assets/bg.png"); /* Note the leading slash */
-        background-size: cover; /* Optional: Adjust as needed */
-        background-position: center; /* Optional: Adjust as needed */
-        background-repeat: no-repeat; /* Optional: Prevent tiling */
-        background-color: black;
-        color: white;
-    }
+body {
+  background-image: url("./assets/bg.png"); /* Note the leading slash */
+  background-size: cover; /* Optional: Adjust as needed */
+  background-position: center; /* Optional: Adjust as needed */
+  background-repeat: no-repeat; /* Optional: Prevent tiling */
+  background-color: black;
+  color: white;
+}
 
-    .movie-card {
-      @apply bg-gray-800 rounded-lg overflow-hidden shadow-md;
+.movie-list {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5;
+
+  &.loading {
+    @apply animate-pulse;
+  }
+
+  &.error {
+    &.error {
+      @apply border-2 border-red-500;
     }
+  }
+
+  .movie-card {
+    @apply bg-gray-800 p-4 rounded-2xl overflow-hidden shadow-md transition-transform transform hover:scale-105 hover:shadow-xl w-64;
+
+    & img {
+      @apply w-full h-auto rounded-md;
+    }
+    & h2 {
+      @apply text-lg font-semibold mt-2;
+    }
+    & p {
+      @apply text-sm text-gray-400;
+    }
+  }
+}
