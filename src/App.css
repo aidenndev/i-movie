@@ -1,9 +1,3 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
 .search-container {
   display: flex;
   align-items: center;
@@ -48,10 +42,10 @@
   }
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+/* Make the root container full width */
+#root {
+  @apply w-full;
+  margin: 0 auto;
+  padding: 2rem;
+  max-width: none; /* remove constraints if any */
 }

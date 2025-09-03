@@ -53,7 +53,7 @@ function App() {
   }, [searchTerm]);
   return (
     <main>
-      <div className="pattern">
+        {/*Header*/}
         <div className="wrapper">
           <header>
             <img
@@ -71,21 +71,18 @@ function App() {
         </div>
 
         <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <h2 className="text-2xl font-bold text-white-900">All movies</h2>
         <section className="movie-list">
-          <h2 className="text-2xl font-bold text-white-900">All movies</h2>
           {loading ? (
             <Spinner />
           ) : errorMessage ? (
             <p className="error-message">{errorMessage}</p>
           ) : (
-            <ul>
-              {movies.map((movie) => (
+              movies.map((movie) => (
                 <MovieCard key={movie.id} movie={movie} />
-              ))}
-            </ul>
+              ))
           )}
         </section>
-      </div>
     </main>
   );
 }
