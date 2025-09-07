@@ -54,15 +54,15 @@ function App() {
     fetchMovies(searchTerm);
   }, [searchTerm]);
   return (
-    <main>
+    <main className="app-wrapper">
         {/*Header*/}
         <div className="wrapper">
           <header>
-            <img
-              src="./src/assets/avengers.png"
-              alt="Avengers Banner"
-              className="w-70 h-70"
-            />
+<img
+  src="./src/assets/avengers.png"
+  alt="Avengers Banner"
+  className="logo-banner"
+/>
             <h1 className="text-4xl font-bold text-white-900 justify-center">
               Welcome to iMovie
             </h1>
