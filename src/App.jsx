@@ -3,6 +3,7 @@ import "./App.css";
 import Search from "./components/Search";
 import Spinner from "./components/Spinner";
 import MovieCard from "./components/MovieCard";
+import { useDebounce } from "react-use";
 
 function App() {
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -19,6 +20,10 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+
+  //Debounce the search term to prevent excessive API calls
+  useDebounce(() => setDebouncedSearchTerm(searchTerm), 400, [searchTerm]);
 
   const fetchMovies = async (query = "") => {
     setLoading(true);
@@ -51,40 +56,38 @@ function App() {
 
   useEffect(() => {
     // Fetch movies based on searchTerm
-    fetchMovies(searchTerm);
-  }, [searchTerm]);
+    fetchMovies(debouncedSearchTerm);
+  }, [debouncedSearchTerm]);
   return (
     <main className="app-wrapper">
-        {/*Header*/}
-        <div className="wrapper">
-          <header>
-<img
-  src="./src/assets/avengers.png"
-  alt="Avengers Banner"
-  className="logo-banner"
-/>
-            <h1 className="text-4xl font-bold text-white-900 justify-center">
-              Welcome to iMovie
-            </h1>
-            <h3 className="text-2xl text-white-700">
-              Find <span className="text-gradient">Movies</span> You Will Enjoy!
-            </h3>
-          </header>
-        </div>
+      {/*Header*/}
+      <div className="wrapper">
+        <header>
+          <img
+            src="./src/assets/avengers.png"
+            alt="Avengers Banner"
+            className="logo-banner"
+          />
+          <h1 className="text-4xl font-bold text-white-900 justify-center">
+            Welcome to iMovie
+          </h1>
+          <h3 className="text-2xl text-white-700">
+            Find <span className="text-gradient">Movies</span> You Will Enjoy!
+          </h3>
+        </header>
+      </div>
 
-        <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <h2 className="text-2xl font-bold text-white-900">All movies</h2>
-        <section className="movie-list">
-          {loading ? (
-            <Spinner />
-          ) : errorMessage ? (
-            <p className="error-message">{errorMessage}</p>
-          ) : (
-              movies.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))
-          )}
-        </section>
+      <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <h2 className="text-2xl font-bold text-white-900">All movies</h2>
+      <section className="movie-list">
+        {loading ? (
+          <Spinner />
+        ) : errorMessage ? (
+          <p className="error-message">{errorMessage}</p>
+        ) : (
+          movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)
+        )}
+      </section>
     </main>
   );
 }
