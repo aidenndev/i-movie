@@ -18,10 +18,10 @@
 }
 
 body {
-  background-image: url("./assets/bg.png"); /* Note the leading slash */
-  background-size: cover; /* Optional: Adjust as needed */
-  background-position: center; /* Optional: Adjust as needed */
-  background-repeat: no-repeat; /* Optional: Prevent tiling */
+  background-image: url("./assets/bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   background-color: black;
   color: white;
 }
@@ -46,11 +46,33 @@ body {
   & img {
     @apply w-full h-auto rounded-md;
   }
-  & h2 {
+  & h3 {
     @apply text-lg font-semibold mt-2;
   }
   & p {
     @apply text-sm text-gray-400;
   }
-  
+}
+
+.movie-info {
+  @apply mt-2 flex flex-row items-center text-sm text-gray-400;
+
+  span {
+    @apply text-xl text-gray-300 mx-1.5;
+  }
+
+  .language {
+    @apply capitalize;
+  }
+}
+
+.rating {
+  @apply flex items-center;
+
+  img {
+    @apply w-4 h-4 mr-1;
+  }
+  p {
+    @apply text-white;
+  }
 }
