@@ -20,12 +20,14 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchMovies = async (query) => {
+  const fetchMovies = async (query = "") => {
     setLoading(true);
     setErrorMessage("");
 
     try {
-      const endpoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+      const endpoint = query
+        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
+        : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
       const response = await fetch(endpoint, API_OPTIONS);
 
       if (!response.ok) throw new Error("Network response was not ok");
@@ -49,7 +51,7 @@ function App() {
 
   useEffect(() => {
     // Fetch movies based on searchTerm
-    fetchMovies();
+    fetchMovies(searchTerm);
   }, [searchTerm]);
   return (
     <main>
