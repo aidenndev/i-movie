@@ -12,6 +12,7 @@ const client = new Client()
 
 const database = new TablesDB(client);
 
+//Update search count
 export const updateSearchCount = async (searchTerm, movie) => {
     try {
 
@@ -45,5 +46,21 @@ export const updateSearchCount = async (searchTerm, movie) => {
         }
     } catch (error) {
         console.error(`Error updating search count: ${error}`);
+    }
+};
+
+//Get trending movies
+export const getTrendingMovies = async () => {
+    try {
+        const result = await database.listRows({
+            databaseId: DATABASE_ID,
+            tableId: TABLE_ID,
+            queries: [Query.orderDesc("count"), Query.limit(9)]
+        });
+        console.log("Trending movies:", result);
+        return result.rows || [];
+    } catch (error) {
+        console.error(`Error fetching trending movies: ${error}`);
+        return [];
     }
 };

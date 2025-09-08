@@ -4,7 +4,7 @@ import Search from "./components/Search";
 import Spinner from "./components/Spinner";
 import MovieCard from "./components/MovieCard";
 import { useDebounce } from "react-use";
-import { updateSearchCount } from "./appwrite";
+import { getTrendingMovies, updateSearchCount } from "./appwrite";
 
 function App() {
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -22,9 +22,10 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [trendingMovies, setTrendingMovies] = useState([]);
 
   //Debounce the search term to prevent excessive API calls
-  useDebounce(() => setDebouncedSearchTerm(searchTerm), 400, [searchTerm]);
+  useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
 
   const fetchMovies = async (query = "") => {
     setLoading(true);
@@ -48,11 +49,10 @@ function App() {
 
       setMovies(data.results || []);
 
-        // Log search term to Appwrite
-        if(query && data.results.length > 0) {
-          await updateSearchCount(query, data.results[0]);
-        }
-
+      // Log search term to Appwrite
+      if (query && data.results.length > 0) {
+        await updateSearchCount(query, data.results[0]);
+      }
     } catch (error) {
       console.error(`Error fetching movies: ${error}`);
       setErrorMessage("Failed to fetch movies");
@@ -61,18 +61,30 @@ function App() {
     }
   };
 
-
-
+  const fetchTrendingMovies = async () => {
+    try {
+      const result = await getTrendingMovies();
+      setTrendingMovies(result);
+    } catch (error) {
+      console.error(`Error fetching trending movies: ${error}`);
+    }
+  };
 
   useEffect(() => {
     // Fetch movies based on searchTerm
     fetchMovies(debouncedSearchTerm);
   }, [debouncedSearchTerm]);
+
+  useEffect(() => {
+    // Fetch trending movies once
+    fetchTrendingMovies();
+  }, []);
+
   return (
     <main className="app-wrapper">
       {/*Header*/}
       <div className="wrapper">
-        <header>
+        <header className="header">
           <img
             src="./src/assets/avengers.png"
             alt="Avengers Banner"
@@ -88,6 +100,24 @@ function App() {
       </div>
 
       <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+      {trendingMovies.length > 0 && (
+        <section className="trending-movies">
+          <h2>Trending Movies</h2>
+          <ul className="trending-movie-list">
+            {trendingMovies.map((movie, index) => (
+              <li key={movie.$id} className="trending-movie-item">
+                <p className="trending-number">{index + 1}</p>
+                <img
+                  src={movie.poster_url}
+                  alt={movie.searchTerm}
+                  className="trending-movie-poster"
+                />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
       <h2 className="text-2xl font-bold text-white-900">All movies</h2>
       <section className="movie-list">
         {loading ? (

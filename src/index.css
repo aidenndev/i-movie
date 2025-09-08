@@ -26,11 +26,15 @@ body {
   background-attachment: fixed; /* <-- keeps the wallpaper fixed, avoids stretching */
 }
 
+.header {
+  @apply flex flex-col items-center justify-center text-center;
+}
+
 .app-wrapper {
-  @apply min-h-screen flex flex-col; /* ensures wrapper fills viewport and stacks content vertically*/
+  @apply min-h-screen flex flex-col pr-6 pb-6 pl-6 md:pr-12 md:pb-12 md:pl-12;
 
   .logo-banner {
-    @apply w-32 h-32 sm:w-48 sm:h-48 md:w-70 md:h-70 transition-transform duration-300 transform hover:scale-105;
+    @apply w-20 h-20 sm:w-28 sm:h-28 md:w-40 md:h-40 transition-transform duration-300 transform hover:scale-105;
   }
 }
 
@@ -83,5 +87,33 @@ body {
   }
   p {
     @apply text-white;
+  }
+}
+
+.trending-movies {
+
+  h2 {
+    @apply text-2xl font-bold text-white;
+  }
+
+  & ul {
+    @apply flex gap-1 my-8 overflow-x-auto;
+  }
+
+  & .trending-movie-item {
+    @apply flex items-center gap-4 flex-shrink-0;
+  }
+
+  .trending-number {
+    font-family: "Outfit", sans-serif;
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 5px rgba(211, 211, 211, 0.698);
+    font-size: 15rem;
+    line-height: 1;
+  }
+
+  & .trending-movie-poster {
+    @apply h-50 w-auto rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 -translate-x-17;
   }
 }
