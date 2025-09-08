@@ -4,6 +4,7 @@ import Search from "./components/Search";
 import Spinner from "./components/Spinner";
 import MovieCard from "./components/MovieCard";
 import { useDebounce } from "react-use";
+import { updateSearchCount } from "./appwrite";
 
 function App() {
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -46,6 +47,12 @@ function App() {
       }
 
       setMovies(data.results || []);
+
+        // Log search term to Appwrite
+        if(query && data.results.length > 0) {
+          await updateSearchCount(query, data.results[0]);
+        }
+
     } catch (error) {
       console.error(`Error fetching movies: ${error}`);
       setErrorMessage("Failed to fetch movies");
@@ -53,6 +60,9 @@ function App() {
       setLoading(false);
     }
   };
+
+
+
 
   useEffect(() => {
     // Fetch movies based on searchTerm
