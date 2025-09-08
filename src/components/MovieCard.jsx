@@ -9,14 +9,14 @@ const MovieCard = ({
         src={
           poster_path
             ? `https://image.tmdb.org/t/p/w500${poster_path}`
-            : "./src/assets/no-image-available.jpg"
+            : "./assets/no-image-available.jpg"
         }
         alt={title}
       />
       <h3>{title}</h3>
       <div className="movie-info">
         <div className="rating">
-          <img src="./src/assets/star.png" alt="Star Icon" />
+          <img src="./assets/star.png" alt="Star Icon" />
           <p>{vote_average ? vote_average.toFixed(1) : "N/A"}</p>
         </div>
         <span>•</span>

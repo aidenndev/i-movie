@@ -86,7 +86,7 @@ function App() {
       <div className="wrapper">
         <header className="header">
           <img
-            src="./src/assets/avengers.png"
+            src="./assets/avengers.png"
             alt="Avengers Banner"
             className="logo-banner"
           />

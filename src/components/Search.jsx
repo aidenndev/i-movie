@@ -4,7 +4,7 @@ const Search = ({ searchTerm, setSearchTerm }) => {
   return (
     <div className="search-container">
       <img
-        src="./src/assets/search.svg"
+        src="./assets/search.svg"
         alt="Search Icon"
         className="w-10 h-10"
       />
