@@ -18,12 +18,12 @@
 }
 
 body {
-  @apply text-white min-h-screen; /* Tailwind utilities for text color and minimum height */
-  background-image: url("./assets/bg.png");
-  background-size: cover; /* scale to cover entire viewport */
-  background-position: center; /* center the image */
-  background-repeat: no-repeat; /* prevent tiling */
-  background-attachment: fixed; /* <-- keeps the wallpaper fixed, avoids stretching */
+  @apply text-white min-h-screen;
+  background-image: url("../public/assets/bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .header {
